@@ -155,22 +155,22 @@ var app = new Vue({
             variables: {}
           };
           return L.marker(latlng, {
-          icon: L.divIcon({className: 'marker-cluster marker-cluster-small', iconSize: [10, 10]})
+          icon: L.divIcon({className: 'marker-cluster marker-cluster-small', iconSize: [8, 8]})
           });
         },
       });
       this.markers = new L.markerClusterGroup({
-        maxClusterRadius: 2,
+        maxClusterRadius: 3,
         spiderfyOnMaxZoom: false,
         showCoverageOnHover: false,
         zoomToBoundsOnClick: false,
         iconCreateFunction: function(cluster) {
           var childCount = cluster.getChildCount();
-          let size = 25;
+          let size = 20;
           if (childCount < 5) {
-            size = 15;
+            size = 12;
           } else if (childCount < 10) {
-            size = 20;
+            size = 16;
           }
           let options = {
             className: 'marker-cluster marker-cluster-small',
