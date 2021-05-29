@@ -3,7 +3,7 @@ var app = new Vue({
   data: {
     message: 'Hello Vue!',
     geojson: {},
-    fields: ['Common_nam', 'Date', 'Weather'],
+    fields: ['Common_nam', 'Date', 'Time', 'Weather'],
     map: null,
     dataLayer: null,
     chosenCommonName: "",
