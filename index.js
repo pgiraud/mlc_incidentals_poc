@@ -22,8 +22,8 @@ var app = new Vue({
       return _.filter(this.geojson.features, (feature) => {
         if ((!this.chosenSpecies ||
              feature.properties['Species'].toLowerCase() == this.chosenSpecies) &&
-            (_.includes(this.chosenWeathers, feature.properties['Weather'].toLowerCase())) &&
-            (_.includes(this.chosenYears, moment(feature.properties['Date'], "DD/MM/YYYY").year()))
+            (_.isEmpty(this.chosenWeathers) || _.includes(this.chosenWeathers, feature.properties['Weather'].toLowerCase())) &&
+            (_.isEmpty(this.chosenYears) || _.includes(this.chosenYears, moment(feature.properties['Date'], "DD/MM/YYYY").year()))
         ) {
           return feature;
         }
@@ -60,12 +60,6 @@ var app = new Vue({
   watch: {
     filteredData: function(data) {
       this.showFeatures(data);
-    },
-    weathers: function(value) {
-      this.chosenWeathers = _.map(value, (v) => v.value);
-    },
-    years: function (value) {
-      this.chosenYears = value;
     }
   },
   mounted: function() {
