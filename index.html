@@ -13,12 +13,15 @@
       rel="stylesheet"
       href="https://cdn.jsdelivr.net/npm/bootstrap-vue@2.21.2/dist/bootstrap-vue.css"
       />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet@1.7.1/dist/leaflet.css">
     <script src="https://cdn.jsdelivr.net/npm/vue@2.6.12/dist/vue.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6/dist/js/bootstrap.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap-vue@2.21.2/dist/bootstrap-vue.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/axios@0.21.1/dist/axios.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/lodash@4.17.21/lodash.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/leaflet@1.7.1/dist/leaflet-src.min.js"></script>
+
   </head>
   <body>
     <div id="app" class="vh-100 container-fluid overflow-hidden d-flex">
@@ -30,19 +33,18 @@
           <div class="">
             <ul class="nav nav-pills" role="tablist">
               <li class="nav-item p-1">
-                <a class="nav-link" href="#map" role="tab" data-toggle="tab">Map</a>
+                <a class="nav-link active" href="#map" role="tab" data-toggle="tab">Map</a>
               </li>
               <li class="nav-item p-1">
-                <a class="nav-link active" href="#data" role="tab" data-toggle="tab">Data</a>
+                <a class="nav-link" href="#data" role="tab" data-toggle="tab">Data</a>
               </li>
             </ul>
           </div>
           <div class="tab-content overflow-hidden d-flex flex-grow-1 m-0">
-            <div class="tab-pane flex-grow-1" id="map" role="tabpanel">
-              the map
+            <div class="tab-pane flex-grow-1 active leaflet-container" id="map" role="tabpanel">
             </div>
-            <div class="tab-pane flex-grow-1 active overflow-auto p-2" id="data" role="tabpanel">
-              <b-table striped hover :items="featuresData" :fields="fields"></b-table>
+            <div class="tab-pane flex-grow-1 overflow-auto p-2" id="data" role="tabpanel">
+              <b-table striped hover :items="tableData" :fields="fields"></b-table>
             </div>
           </div>
         </main>
