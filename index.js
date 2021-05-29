@@ -21,23 +21,35 @@ var app = new Vue({
       this.chosenCommonName;  // Simple reference to make sure computed value react to changes
       return _.filter(this.geojson.features, (feature) => {
         if ((!this.chosenCommonName ||
-             feature.properties['Common_nam'] == this.chosenCommonName) &&
+             feature.properties['Common_nam'].toLowerCase() == this.chosenCommonName) &&
             (!this.chosenWeather ||
-             feature.properties['Weather'] == this.chosenWeather)
+             feature.properties['Weather'].toLowerCase() == this.chosenWeather)
         ) {
           return feature;
         }
       });
     },
     commonNames: function() {
-      return _.uniq(_.map(this.geojson.features, (data) => {
-        return data.properties['Common_nam'];
+      const values = _.uniq(_.map(this.geojson.features, (data) => {
+        return data.properties['Common_nam'].toLowerCase();
       }));
+      return _.map(values, function(value) {
+        return {
+          text: _.map(_.words(value, /[^, ]+/g), _.capitalize).join(' '),
+          value: value
+        }
+      });
     },
     weathers: function() {
-      return _.uniq(_.map(this.geojson.features, (data) => {
-        return data.properties['Weather'];
+      const values =  _.uniq(_.map(this.geojson.features, (data) => {
+        return data.properties['Weather'].toLowerCase();
       }));
+      return _.map(values, function(value) {
+        return {
+          text: _.map(_.words(value, /[^, ]+/g), _.capitalize).join(' '),
+          value: value
+        }
+      });
     },
     years: function() {
       return _.uniq(_.map(this.geojson.features, (data) => {
