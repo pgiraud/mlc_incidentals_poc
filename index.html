@@ -29,10 +29,10 @@
         <nav id="sidebarMenu" class="col-md-3 col-lg-2">
           <div class="h3 border-bottom">MLC Incidentals</div>
           <b-form-group
-            label="Common Name"
-            label-for="input-common-name"
+            label="Species"
+            label-for="input-species"
             >
-            <b-form-select id="input-common-name" v-model="chosenCommonName" :options="commonNames">
+            <b-form-select id="input-species" v-model="chosenSpecies" :options="species">
               <template #first>
                 <b-form-select-option value="">All</b-form-select-option>
               </template>
@@ -58,6 +58,8 @@
               </template>
             </b-form-select>
           </b-form-group>
+          <hr>
+          {{ filteredData.length }} records found
         </nav>
         <main role="main" class="col-md-9 col-lg-10 p-0 d-flex flex-column flex-grow-1 overflow-hidden">
           <div class="">

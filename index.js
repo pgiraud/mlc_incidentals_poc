@@ -3,10 +3,10 @@ var app = new Vue({
   data: {
     message: 'Hello Vue!',
     geojson: {},
-    fields: ['Common_nam', 'Date', 'Time', 'Weather'],
+    fields: ['Species', 'Date', 'Time', 'Weather'],
     map: null,
     dataLayer: null,
-    chosenCommonName: "",
+    chosenSpecies: "",
     chosenWeather: "",
     chosenYear: ""
   },
@@ -18,10 +18,10 @@ var app = new Vue({
     },
     filteredData: function() {
       // FIXME filter data
-      this.chosenCommonName;  // Simple reference to make sure computed value react to changes
+      this.chosenSpecies;  // Simple reference to make sure computed value react to changes
       return _.filter(this.geojson.features, (feature) => {
-        if ((!this.chosenCommonName ||
-             feature.properties['Common_nam'].toLowerCase() == this.chosenCommonName) &&
+        if ((!this.chosenSpecies ||
+             feature.properties['Species'].toLowerCase() == this.chosenSpecies) &&
             (!this.chosenWeather ||
              feature.properties['Weather'].toLowerCase() == this.chosenWeather)
         ) {
@@ -29,10 +29,10 @@ var app = new Vue({
         }
       });
     },
-    commonNames: function() {
+    species: function() {
       const values = _.uniq(_.map(this.geojson.features, (data) => {
-        return data.properties['Common_nam'].toLowerCase();
-      }));
+        return data.properties['Species'].toLowerCase();
+      })).sort();
       return _.map(values, function(value) {
         return {
           text: _.map(_.words(value, /[^, ]+/g), _.capitalize).join(' '),
@@ -69,7 +69,7 @@ var app = new Vue({
   methods: {
     loadData: function() {
       axios
-        .get('data/mammals_4.json')
+        .get('data/trial_herps_5.json')
         .then(response => (this.geojson = response.data))
     },
     createMap: function() {
@@ -139,7 +139,7 @@ var app = new Vue({
           }).addTo(map);
         });
 
-      const styleMammals = {
+      const style = {
         radius: 6.000000000000002,
         opacity: 1,
         fillColor: '#EA9657',
@@ -154,7 +154,7 @@ var app = new Vue({
             feature: feature,
             variables: {}
           };
-          return L.circleMarker(latlng, styleMammals);
+          return L.circleMarker(latlng, style);
         },
       });
       map.addLayer(this.dataLayer);
