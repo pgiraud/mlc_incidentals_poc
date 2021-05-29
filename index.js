@@ -61,7 +61,7 @@ var app = new Vue({
         .then(response => (this.geojson = response.data))
     },
     createMap: function() {
-      this.map = L.map('map', {
+      const map = L.map('map', {
           zoomControl:true,
           maxZoom:17,
           minZoom:1
@@ -75,10 +75,81 @@ var app = new Vue({
           maxNativeZoom: 20
       });
       layer_ESRISatellite_0;
-      this.map.addLayer(layer_ESRISatellite_0);
+      map.addLayer(layer_ESRISatellite_0);
 
-      this.dataLayer = L.geoJSON();
-      this.map.addLayer(this.dataLayer);
+      axios
+        .get('data/streams.json')
+        .then(response => {
+          const streams = new L.geoJson(response.data, {
+            layerName: 'Streams',
+            style: {
+              opacity: 0.5,
+              color: 'rgba(1,34,243,1.0)',
+              lineCap: 'square',
+              lineJoin: 'bevel',
+              weight: 2.0,
+              fillOpacity: 0
+            },
+          });
+          map.addLayer(streams);
+        });
+
+      axios
+        .get('data/border_MLC_3.json')
+        .then(response => {
+          const streams = new L.geoJson(response.data, {
+            layerName: 'Border',
+            style: {
+              opacity: 1,
+              color: 'rgba(0,0,0,1.0)',
+              dashArray: '',
+              lineCap: 'square',
+              lineJoin: 'bevel',
+              weight: 3.0,
+              fillColor: 'green',
+              fillOpacity: 0.2,
+            },
+          });
+          map.addLayer(streams);
+        });
+
+      axios
+        .get('data/MLC_All_trails_2.json')
+        .then(response => {
+          const streams = new L.geoJson(response.data, {
+            layerName: 'Trails',
+            style: {
+              opacity: 0.5,
+              color: 'rgba(219,30,42,1.0)',
+              dashArray: '',
+              lineCap: 'round',
+              lineJoin: 'round',
+              weight: 2.0
+            },
+          });
+          map.addLayer(streams);
+        });
+
+      const styleMammals = {
+        radius: 6.000000000000002,
+        opacity: 1,
+        fillColor: '#EA9657',
+        color: '#fff',
+        weight: 1,
+        opacity: 0.8,
+        fillOpacity: 0.6
+      };
+      this.dataLayer = new L.geoJson(null, {
+        pointToLayer: function (feature, latlng) {
+          var context = {
+            feature: feature,
+            variables: {}
+          };
+          return L.circleMarker(latlng, styleMammals);
+        },
+      });
+      map.addLayer(this.dataLayer);
+      this.map = map;
     },
     showFeatures: function(features) {
       this.dataLayer.clearLayers();
