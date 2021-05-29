@@ -1,0 +1,17 @@
+.marker-cluster {
+    border: 1px solid rgba(255, 255, 255, 0.6);
+}
+.marker-cluster div {
+    width: initial;
+    height: 100%;
+    margin-left: initial;
+    margin-top: initial;
+    background-color: transparent !important;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.marker-cluster div span {
+    line-height: initial;
+}

@@ -154,15 +154,45 @@ var app = new Vue({
             feature: feature,
             variables: {}
           };
-          return L.circleMarker(latlng, style);
+          return L.marker(latlng, {
+          icon: L.divIcon({className: 'marker-cluster marker-cluster-small', iconSize: [10, 10]})
+          });
         },
       });
-      map.addLayer(this.dataLayer);
+      this.markers = new L.markerClusterGroup({
+        maxClusterRadius: 2,
+        spiderfyOnMaxZoom: false,
+        showCoverageOnHover: false,
+        zoomToBoundsOnClick: false,
+        iconCreateFunction: function(cluster) {
+          var childCount = cluster.getChildCount();
+          let size = 25;
+          if (childCount < 5) {
+            size = 15;
+          } else if (childCount < 10) {
+            size = 20;
+          }
+          let options = {
+            className: 'marker-cluster marker-cluster-small',
+            iconSize: new L.Point(size, size),
+          };
+
+          if (map.getZoom() > 16) {
+            options.html = '<div><span>' + childCount + '</span></div>'
+          }
+
+          return new L.DivIcon(options);
+        }
+      });
+      this.markers.addLayer(this.dataLayer);
+      map.addLayer(this.markers);
       this.map = map;
     },
     showFeatures: function(features) {
       this.dataLayer.clearLayers();
       this.dataLayer.addData(features);
+      this.markers.clearLayers()
+      this.markers.addLayer(this.dataLayer);
     }
   }
 })
