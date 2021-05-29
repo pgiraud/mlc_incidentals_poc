@@ -23,7 +23,9 @@ var app = new Vue({
         if ((!this.chosenSpecies ||
              feature.properties['Species'].toLowerCase() == this.chosenSpecies) &&
             (!this.chosenWeather ||
-             feature.properties['Weather'].toLowerCase() == this.chosenWeather)
+             feature.properties['Weather'].toLowerCase() == this.chosenWeather) &&
+            (!this.chosenYear ||
+             moment(feature.properties['Date'], "DD/MM/YYYY").year() == this.chosenYear)
         ) {
           return feature;
         }
