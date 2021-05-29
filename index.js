@@ -80,7 +80,7 @@ var app = new Vue({
       axios
         .get('data/streams.json')
         .then(response => {
-          const streams = new L.geoJson(response.data, {
+          L.geoJson(response.data, {
             layerName: 'Streams',
             style: {
               opacity: 0.5,
@@ -90,14 +90,13 @@ var app = new Vue({
               weight: 2.0,
               fillOpacity: 0
             },
-          });
-          map.addLayer(streams);
+          }).addTo(map);
         });
 
       axios
         .get('data/border_MLC_3.json')
         .then(response => {
-          const streams = new L.geoJson(response.data, {
+          L.geoJson(response.data, {
             layerName: 'Border',
             style: {
               opacity: 1,
@@ -109,25 +108,23 @@ var app = new Vue({
               fillColor: 'green',
               fillOpacity: 0.2,
             },
-          });
-          map.addLayer(streams);
+          }).addTo(map);
         });
 
       axios
         .get('data/MLC_All_trails_2.json')
         .then(response => {
-          const streams = new L.geoJson(response.data, {
+          L.geoJson(response.data, {
             layerName: 'Trails',
             style: {
-              opacity: 0.5,
-              color: 'rgba(219,30,42,1.0)',
+              opacity: 0.6,
+              color: 'gray',
               dashArray: '',
               lineCap: 'round',
               lineJoin: 'round',
               weight: 2.0
             },
-          });
-          map.addLayer(streams);
+          }).addTo(map);
         });
 
       const styleMammals = {
