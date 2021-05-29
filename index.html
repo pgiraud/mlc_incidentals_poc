@@ -21,13 +21,43 @@
     <script src="https://cdn.jsdelivr.net/npm/axios@0.21.1/dist/axios.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/lodash@4.17.21/lodash.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/leaflet@1.7.1/dist/leaflet-src.min.js"></script>
-
+    <script src="https://cdn.jsdelivr.net/npm/moment@2.29.1/moment.min.js"></script>
   </head>
   <body>
     <div id="app" class="vh-100 container-fluid overflow-hidden d-flex">
       <div class="d-flex flex-grow-1 mx-n3">
         <nav id="sidebarMenu" class="col-md-3 col-lg-2">
           <div class="h3 border-bottom">MLC Incidentals</div>
+          <b-form-group
+            label="Common Name"
+            label-for="input-common-name"
+            >
+            <b-form-select id="input-common-name" v-model="chosenCommonName" :options="commonNames">
+              <template #first>
+                <b-form-select-option value="">All</b-form-select-option>
+              </template>
+            </b-form-select>
+          </b-form-group>
+          <b-form-group
+            label="Weather"
+            label-for="input-weather"
+            >
+            <b-form-select id="input-weather" v-model="chosenWeather" :options="weathers">
+              <template #first>
+                <b-form-select-option value="">All</b-form-select-option>
+              </template>
+            </b-form-select>
+          </b-form-group>
+          <b-form-group
+            label="Year"
+            label-for="input-year"
+            >
+            <b-form-select id="input-year" v-model="chosenYear" :options="years">
+              <template #first>
+                <b-form-select-option value="">All</b-form-select-option>
+              </template>
+            </b-form-select>
+          </b-form-group>
         </nav>
         <main role="main" class="col-md-9 col-lg-10 p-0 d-flex flex-column flex-grow-1 overflow-hidden">
           <div class="">

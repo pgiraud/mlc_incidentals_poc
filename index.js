@@ -6,6 +6,9 @@ var app = new Vue({
     fields: ['Common_nam', 'Date', 'Weather'],
     map: null,
     dataLayer: null,
+    chosenCommonName: "",
+    chosenWeather: "",
+    chosenYear: ""
   },
   computed: {
     tableData: function() {
@@ -15,7 +18,31 @@ var app = new Vue({
     },
     filteredData: function() {
       // FIXME filter data
-      return this.geojson.features;
+      this.chosenCommonName;  // Simple reference to make sure computed value react to changes
+      return _.filter(this.geojson.features, (feature) => {
+        if ((!this.chosenCommonName ||
+             feature.properties['Common_nam'] == this.chosenCommonName) &&
+            (!this.chosenWeather ||
+             feature.properties['Weather'] == this.chosenWeather)
+        ) {
+          return feature;
+        }
+      });
+    },
+    commonNames: function() {
+      return _.uniq(_.map(this.geojson.features, (data) => {
+        return data.properties['Common_nam'];
+      }));
+    },
+    weathers: function() {
+      return _.uniq(_.map(this.geojson.features, (data) => {
+        return data.properties['Weather'];
+      }));
+    },
+    years: function() {
+      return _.uniq(_.map(this.geojson.features, (data) => {
+        return moment(data.properties['Date'], "DD/MM/YYYY").year();
+      }));
     }
   },
   watch: {
@@ -54,6 +81,7 @@ var app = new Vue({
       this.map.addLayer(this.dataLayer);
     },
     showFeatures: function(features) {
+      this.dataLayer.clearLayers();
       this.dataLayer.addData(features);
     }
   }
