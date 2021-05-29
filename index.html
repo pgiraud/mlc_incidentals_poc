@@ -38,25 +38,19 @@
               </template>
             </b-form-select>
           </b-form-group>
-          <b-form-group
-            label="Weather"
-            label-for="input-weather"
-            >
-            <b-form-select id="input-weather" v-model="chosenWeather" :options="weathers">
-              <template #first>
-                <b-form-select-option value="">All</b-form-select-option>
-              </template>
-            </b-form-select>
+          <b-form-group label="Weather">
+            <b-form-checkbox-group
+              id="input-weather"
+              v-model="chosenWeathers"
+              :options="weathers"
+              ></b-form-checkbox-group>
           </b-form-group>
-          <b-form-group
-            label="Year"
-            label-for="input-year"
-            >
-            <b-form-select id="input-year" v-model="chosenYear" :options="years">
-              <template #first>
-                <b-form-select-option value="">All</b-form-select-option>
-              </template>
-            </b-form-select>
+          <b-form-group label="Year">
+            <b-form-checkbox-group
+              id="input-year"
+              v-model="chosenYears"
+              :options="years"
+              ></b-form-checkbox-group>
           </b-form-group>
           <hr>
           {{ filteredData.length }} records found
